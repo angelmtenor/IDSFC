@@ -3,7 +3,7 @@ import pandas
 
 
 def complex_heuristic(file_path):
-    '''
+    """
     You are given a list of Titatic passengers and their associated
     information. More information about the data can be seen at the link below:
     http://www.kaggle.com/c/titanic-gettingStarted/data
@@ -50,7 +50,7 @@ def complex_heuristic(file_path):
     You can also look at the Titanic data that you will be working with
     at the link below:
     https://s3.amazonaws.com/content.udacity-data.com/courses/ud359/titanic_data.csv
-    '''
+    """
 
     predictions = {}
     df = pandas.read_csv(file_path)

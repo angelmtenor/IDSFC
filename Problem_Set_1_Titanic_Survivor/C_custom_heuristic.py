@@ -1,17 +1,16 @@
-import numpy
+import numpy as np
 import pandas
-import statsmodels.api as sm
 
 
 def custom_heuristic(file_path):
-    '''
-    You are given a list of Titantic passengers and their associated
+    """
+    You are given a list of Titatic passengers and their associated
     information. More information about the data can be seen at the link below:
     http://www.kaggle.com/c/titanic-gettingStarted/data
 
     For this exercise, you need to write a custom heuristic that will take
     in some combination of the passenger's attributes and predict if the passenger
-    survived the Titanic diaster.
+    survived the Titanic disaster.
 
     Can your custom heuristic beat 80% accuracy?
 
@@ -61,12 +60,35 @@ def custom_heuristic(file_path):
     You can also look at the Titantic data that you will be working with
     at the link below:
     https://s3.amazonaws.com/content.udacity-data.com/courses/ud359/titanic_data.csv
-    '''
+    """
 
     predictions = {}
     df = pandas.read_csv(file_path)
     for passenger_index, passenger in df.iterrows():
-    #
-    # your code here
-    #
+        passenger_id = passenger['PassengerId']
+
+        # your code here
+
+
+        predictions[passenger_id] = 0
+        if passenger['Sex'] == 'female':
+            predictions[passenger_id] = 1
+        if passenger['Age'] < 4 and passenger['Parch'] > 0:  # 'Parch' > 0 is used for filtering missing ages
+            predictions[passenger_id] = 1
+        if passenger['Age'] < 19 and passenger['Pclass'] == 1 and passenger['Parch'] > 0:
+            predictions[passenger_id] = 1
+        if passenger['Age'] < 15 and passenger['Pclass'] == 2 and passenger['Parch'] > 0:
+            predictions[passenger_id] = 1
+
     return predictions
+
+
+f_path = 'titanic_data.csv'
+
+prediction = custom_heuristic(f_path)
+
+dframe = pandas.read_csv(f_path)
+dframe['prediction'] = prediction.values()
+accuracy = np.mean(list(dframe['prediction'] == dframe['Survived']))
+
+print("Your heuristic is {:.2f}% accurate".format(accuracy * 100))
