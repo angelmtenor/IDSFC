@@ -1,17 +1,16 @@
-import numpy
+import numpy as np
 import pandas
-import statsmodels.api as sm
 
 
 def complex_heuristic(file_path):
     '''
-    You are given a list of Titantic passengers and their associated
+    You are given a list of Titatic passengers and their associated
     information. More information about the data can be seen at the link below:
     http://www.kaggle.com/c/titanic-gettingStarted/data
 
     For this exercise, you need to write a more sophisticated algorithm
     that will use the passengers' gender and their socioeconomical class and age 
-    to predict if they survived the Titanic diaster. 
+    to predict if they survived the Titanic disaster. 
 
     You prediction should be 79% accurate or higher.
 
@@ -48,7 +47,7 @@ def complex_heuristic(file_path):
     passenger_id = passenger['PassengerId']
     predictions[passenger_id] = 0
 
-    You can also look at the Titantic data that you will be working with
+    You can also look at the Titanic data that you will be working with
     at the link below:
     https://s3.amazonaws.com/content.udacity-data.com/courses/ud359/titanic_data.csv
     '''
@@ -57,11 +56,21 @@ def complex_heuristic(file_path):
     df = pandas.read_csv(file_path)
     for passenger_index, passenger in df.iterrows():
         passenger_id = passenger['PassengerId']
-        #
+
         # your code here
-        # for example, assuming that passengers who are male
-        # and older than 18 surived:
-        #     if passenger['Sex'] == 'male' or passenger['Age'] < 18:
-        #         predictions[passenger_id] = 1
-        #
+        predictions[passenger_id] = 0
+        if passenger['Sex'] == 'female' or (passenger['Pclass'] == 1 and passenger['Age'] < 18):
+            predictions[passenger_id] = 1
+
     return predictions
+
+
+f_path = 'titanic_data.csv'
+
+prediction = complex_heuristic(f_path)
+
+dframe = pandas.read_csv(f_path)
+dframe['prediction'] = prediction.values()
+accuracy = np.mean(list(dframe['prediction'] == dframe['Survived']))
+
+print("Your heuristic is {:.2f}% accurate".format(accuracy * 100))
