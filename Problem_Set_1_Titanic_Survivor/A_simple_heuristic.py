@@ -1,5 +1,5 @@
-import pandas
 import numpy as np
+import pandas
 
 
 def simple_heuristic(file_path):
@@ -71,16 +71,17 @@ def simple_heuristic(file_path):
         elif passenger['Sex'] == 'male':
             predictions[passenger_id] = 0
         else:
-            print('warning: wrong gender found: Id ',passenger['PassengerId'],' gender ',passenger['Sex'])
+            print('warning: wrong gender found: Id ', passenger['PassengerId'], ' gender ', passenger['Sex'])
 
     return predictions
 
-file_path = 'titanic_data.csv'
 
-prediction = simple_heuristic(file_path)
+f_path = 'titanic_data.csv'
 
-df = pandas.read_csv(file_path)
-df['prediction'] = prediction.values()
-accuracy = np.mean(list(df['prediction']==df['Survived']))
+prediction = simple_heuristic(f_path)
 
-print("Your heuristic is {:.2f}% accurate".format(accuracy*100))
+dframe = pandas.read_csv(f_path)
+dframe['prediction'] = prediction.values()
+accuracy = np.mean(list(dframe['prediction'] == dframe['Survived']))
+
+print("Your heuristic is {:.2f}% accurate".format(accuracy * 100))
