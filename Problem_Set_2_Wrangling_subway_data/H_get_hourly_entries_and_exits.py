@@ -14,6 +14,10 @@ def get_hourly_entries(df):
        1) Create a new column called ENTRIESn_hourly
        2) Assign to the column the difference between ENTRIESn of the current row 
           and the previous row. If there is any NaN, fill/replace it with 1.
+          
+       b1) Create a new column called EXITSn_hourly
+       b2) Assign to the column the difference between EXITSn of the current row 
+          and the previous row. If there is any NaN, fill/replace it with 0.
 
     You may find the pandas functions shift() and fillna() to be helpful in this exercise.
 
@@ -36,4 +40,11 @@ def get_hourly_entries(df):
 
     """
     # your code here
+    df['ENTRIESn_hourly'] = df['ENTRIESn'].diff().fillna(1)
+    df['EXITSn_hourly'] = df['EXITSn'].diff().fillna(0)
+
     return df
+DIR = 'MTA_Subway_turnstile'
+data_filename = DIR+'/'+'master_turnslide_filtered.txt'
+data = pandas.read_csv(data_filename)
+print(get_hourly_entries(data).head())
