@@ -26,4 +26,6 @@ def filter_by_regular(filename):
 DIR = 'MTA_Subway_turnstile'
 master_filename = DIR+'/'+'master_turnslide.txt'
 
-print(filter_by_regular(master_filename).head())
+filtered_df = filter_by_regular(master_filename)
+
+filtered_df.to_csv(DIR+'/'+'master_turnslide_filtered.txt')
