@@ -26,7 +26,7 @@ def gradient_descent(features, values, theta, alpha, num_iterations):
 
     cost_history = []
 
-    # your code
+    # YOUR CODE GOES HERE
     for i in range(num_iterations):
         predicted = np.dot(features, theta)
         theta += alpha/len(values) * np.dot((values - predicted), features)
