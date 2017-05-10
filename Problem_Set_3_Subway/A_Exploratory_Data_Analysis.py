@@ -1,6 +1,5 @@
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
 def entries_histogram(turnstile_weather):
@@ -27,10 +26,15 @@ def entries_histogram(turnstile_weather):
 
     plt.figure()
     plt.axis([0, 6000, 0, 45000])
-    # your code here to plot a historgram for hourly entries when it is not raining
-    turnstile_weather[turnstile_weather['rain']==0]['ENTRIESn_hourly'].hist(bins=200, label = 'No rain')
-    # your code here to plot a historgram for hourly entries when it is raining
-    turnstile_weather[turnstile_weather['rain']==1]['ENTRIESn_hourly'].hist(bins=200, label = 'Rain')
+    # your code here to plot a histogram for hourly entries when it is not raining
+    turnstile_weather[turnstile_weather['rain'] == 0]['ENTRIESn_hourly'].hist(bins=200, label='No rain')
+    # your code here to plot a histogram for hourly entries when it is raining
+    turnstile_weather[turnstile_weather['rain'] == 1]['ENTRIESn_hourly'].hist(bins=200, label='Rain')
     plt.legend()
 
     return plt
+
+
+if __name__ == "__main__":
+    df = pd.read_csv('MTA_Subway_turnstile/turnstile_data_master_with_weather.csv')
+    entries_histogram(df).show()
