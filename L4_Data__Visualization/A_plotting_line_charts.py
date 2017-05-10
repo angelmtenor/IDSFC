@@ -21,12 +21,12 @@ def lineplot_compare(hr_by_team_year_sf_la_csv):
     # to aes, rather than in our geometry functions. For example,
     # ggplot(data, aes(xvar, yvar, color=category_var)). This might help you
     # in this exercise.
-
-    gg = ggplot(hr_by_team_year_sf_la_csv, aes('yearID', 'HR', color = 'teamID')) + \
-           geom_point() + geom_line() + ggtitle('HRs by year')
+    df = pd.read_csv(hr_by_team_year_sf_la_csv)
+    gg = ggplot(df, aes('yearID', 'HR', color='teamID')) + \
+         geom_point() + geom_line() + ggtitle('HRs by year')
     return gg
 
-if __name__ == "__main__":
-    df = pd.read_csv('hr_by_team_year_sf_la.csv')
-    print(lineplot_compare(df))
 
+if __name__ == "__main__":
+    filename = 'hr_by_team_year_sf_la.csv'
+    print(lineplot_compare(filename))
