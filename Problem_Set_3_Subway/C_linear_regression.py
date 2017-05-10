@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from ggplot import *
+import matplotlib.pyplot as plt
 
 """
 In this question, you need to:
@@ -146,14 +147,36 @@ def plot_cost_history(alpha, cost_history):
            geom_point() + ggtitle('Cost History for alpha = %.3f' % alpha)
 
 
+# PLOTTING RESIDUALS
+
+def plot_residuals(turnstile_weather, predictions):
+    """
+    Using the same methods that we used to plot a histogram of entries
+    per hour for our data, why don't you make a histogram of the residuals
+    (that is, the difference between the original hourly entry data and the predicted values).
+    Try different binwidths for your histogram.
+
+    Based on this residual histogram, do you have any insight into how our model
+    performed?  Reading a bit on this webpage might be useful:
+
+    http://www.itl.nist.gov/div898/handbook/pri/section2/pri24.htm
+    """
+
+    plt.figure()
+    (turnstile_weather['ENTRIESn_hourly'] - predictions).hist(bins=100)
+    plt.title('Residuals')
+    plt.axis([-5000,5000,0,40000])
+    return plt
+
+
 if __name__ == "__main__":
-    dataframe = pd.read_csv('MTA_Subway_turnstile/turnstile_data_master_with_weather.csv')
-    pre = predictions(dataframe)[0]
-    data = dataframe['ENTRIESn_hourly']
-    r_squared = 1- np.sum(np.square(data - pre)) / np.sum(np.square(data-np.average(data)))
+    turnstile_weather = pd.read_csv('MTA_Subway_turnstile/turnstile_data_master_with_weather.csv')
+    pre = predictions(turnstile_weather)[0]
+    data = turnstile_weather['ENTRIESn_hourly']
+    r_squared = 1 - np.sum(np.square(data - pre)) / np.sum(np.square(data - np.average(data)))
     print("R^2 = ", r_squared)
 
-    print(predictions(dataframe)[1])  # plot cost history
+    print(predictions(turnstile_weather)[1])  # plot cost history
 
-
-
+    # PLOTTING RESIDUALS
+    plot_residuals(turnstile_weather, pre).show()
