@@ -147,5 +147,13 @@ def plot_cost_history(alpha, cost_history):
 
 
 if __name__ == "__main__":
-    data = pd.read_csv('MTA_Subway_turnstile/turnstile_data_master_with_weather.csv')
-    print(predictions(data))
+    dataframe = pd.read_csv('MTA_Subway_turnstile/turnstile_data_master_with_weather.csv')
+    pre = predictions(dataframe)[0]
+    data = dataframe['ENTRIESn_hourly']
+    r_squared = 1- np.sum(np.square(data - pre)) / np.sum(np.square(data-np.average(data)))
+    print("R^2 = ", r_squared)
+
+    print(predictions(dataframe)[1])  # plot cost history
+
+
+
