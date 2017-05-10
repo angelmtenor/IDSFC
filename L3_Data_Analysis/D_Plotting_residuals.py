@@ -17,5 +17,7 @@ def plot_residuals(turnstile_weather, predictions):
     """
 
     plt.figure()
-    (turnstile_weather['ENTRIESn_hourly'] - predictions).hist()
+    (turnstile_weather['ENTRIESn_hourly'] - predictions).hist(bins=100)
+    plt.title('Residuals')
+    plt.axis([-5000, 5000, 0, 5000])
     return plt
