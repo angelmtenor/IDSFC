@@ -29,7 +29,6 @@ def mann_whitney_plus_means(turnstile_weather):
     https://s3.amazonaws.com/content.udacity-data.com/courses/ud359/turnstile_data_master_with_weather.csv
     """
 
-    # your code here
     rain = turnstile_weather[turnstile_weather['rain']==0]['ENTRIESn_hourly']
     no_rain = turnstile_weather[turnstile_weather['rain']==1]['ENTRIESn_hourly']
 
