@@ -1,7 +1,8 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import statsmodels.api as sm
 from ggplot import *
-import matplotlib.pyplot as plt
 
 """
 In this question, you need to:
@@ -165,12 +166,12 @@ def plot_residuals(turnstile_weather, predictions):
     plt.figure()
     (turnstile_weather['ENTRIESn_hourly'] - predictions).hist(bins=100)
     plt.title('Residuals')
-    plt.axis([-5000,5000,0,40000])
+    plt.axis([-5000, 5000, 0, 40000])
     return plt
 
 
 def compute_r_squared(data, predictions):
-    '''
+    """
     In exercise 5, we calculated the R^2 value for you. But why don't you try and
     and calculate the R^2 value yourself.
 
@@ -182,7 +183,7 @@ def compute_r_squared(data, predictions):
     Documentation about numpy.mean() and numpy.sum() below:
     http://docs.scipy.org/doc/numpy/reference/generated/numpy.mean.html
     http://docs.scipy.org/doc/numpy/reference/generated/numpy.sum.html
-    '''
+    """
 
     # your code here
     r_squared = 1 - np.sum(np.square(data - predictions)) / np.sum(np.square(data - np.average(data)))
@@ -190,13 +191,82 @@ def compute_r_squared(data, predictions):
     return r_squared
 
 
+"""
+In this optional exercise, you should complete the function called 
+predictions(turnstile_weather). This function takes in our pandas 
+turnstile weather dataframe, and returns a set of predicted ridership values,
+based on the other information in the dataframe.  
+
+In exercise 3.5 we used Gradient Descent in order to compute the coefficients
+theta used for the ridership prediction. Here you should attempt to implement 
+another way of computing the coeffcients theta. You may also try using a reference implementation such as: 
+http://statsmodels.sourceforge.net/devel/generated/statsmodels.regression.linear_model.OLS.html
+
+One of the advantages of the statsmodels implementation is that it gives you
+easy access to the values of the coefficients theta. This can help you infer relationships 
+between variables in the dataset.
+
+You may also experiment with polynomial terms as part of the input variables.  
+
+The following links might be useful: 
+http://en.wikipedia.org/wiki/Ordinary_least_squares
+http://en.wikipedia.org/w/index.php?title=Linear_least_squares_(mathematics)
+http://en.wikipedia.org/wiki/Polynomial_regression
+
+This is your playground. Go wild!
+
+How does your choice of linear regression compare to linear regression
+with gradient descent computed in Exercise 3.5?
+
+You can look at the information contained in the turnstile_weather dataframe below:
+https://s3.amazonaws.com/content.udacity-data.com/courses/ud359/turnstile_data_master_with_weather.csv
+
+Note: due to the memory and CPU limitation of our amazon EC2 instance, we will
+give you a random subset (~10%) of the data contained in turnstile_data_master_with_weather.csv
+
+If you receive a "server has encountered an error" message, that means you are hitting 
+the 30 second limit that's placed on running your program. See if you can optimize your code so it
+runs faster.
+"""
+
+
+def predictions_ols(dataframe):
+    features = dataframe[['rain', 'precipi', 'Hour', 'meantempi']]
+    # Add UNIT to features using dummy variables
+    dummy_units = pd.get_dummies(dataframe['UNIT'], prefix='unit')
+    features = features.join(dummy_units)
+    # Values
+    values = dataframe['ENTRIESn_hourly']
+    m = len(values)
+
+    features, mu, sigma = normalize_features(features)
+    features['ones'] = np.ones(m)  # Add a column of 1s (y intercept)
+
+    # Convert features and values to numpy arrays
+    features_array = np.array(features)
+    values_array = np.array(values)
+
+    model = sm.OLS(values_array, features_array)
+    results = model.fit()
+
+    pred = np.dot(features_array, results.params)
+    return pred
+
+
 if __name__ == "__main__":
     turnstile_weather = pd.read_csv('MTA_Subway_turnstile/turnstile_data_master_with_weather.csv')
     pre = predictions(turnstile_weather)[0]
     data = turnstile_weather['ENTRIESn_hourly']
-    print("R^2 = ", compute_r_squared(data, pre))
 
     print(predictions(turnstile_weather)[1])  # plot cost history
 
-    # PLOTTING RESIDUALS
+    # plotting residuals
+    plot_residuals(turnstile_weather, pre).show()
+
+    # computing R^2
+    print("R^2 = ", compute_r_squared(data, pre))
+
+    # optional prediction: ordinary least squares (OLS)
+    pre_OLS = predictions_ols(turnstile_weather)
+    print("R^2 (OLS) = ", compute_r_squared(data, pre_OLS))
     plot_residuals(turnstile_weather, pre).show()
