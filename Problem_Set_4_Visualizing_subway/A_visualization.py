@@ -1,6 +1,5 @@
 import pandas as pd
 from ggplot import *
-from datetime import datetime
 
 
 def plot_weather_data(turnstile_weather):
@@ -39,27 +38,31 @@ def plot_weather_data(turnstile_weather):
     week_df = turnstile_weather[['weekday', 'ENTRIESn_hourly']].groupby('weekday', as_index=False).mean()
 
     unit_df = turnstile_weather[['UNIT', 'ENTRIESn_hourly']].groupby('UNIT', as_index=False).mean()
-    #unit_df = unit_df.nlargest(100, 'ENTRIESn_hourly')
+    # unit_df = unit_df.nlargest(100, 'ENTRIESn_hourly')
 
-    hour_unit_df = turnstile_weather[['Hour', 'UNIT', 'ENTRIESn_hourly']].groupby(['Hour', 'UNIT'], as_index=False).mean()
+    hour_unit_df = turnstile_weather[['Hour', 'UNIT', 'ENTRIESn_hourly']].groupby(['Hour', 'UNIT'],
+                                                                                  as_index=False).mean()
 
-    max_hour_unit = hour_unit_df[hour_unit_df.groupby(['Hour'])['ENTRIESn_hourly'].transform(max) == hour_unit_df['ENTRIESn_hourly']]
+    max_hour_unit = hour_unit_df[
+        hour_unit_df.groupby(['Hour'])['ENTRIESn_hourly'].transform(max) == hour_unit_df['ENTRIESn_hourly']]
 
     print(max_hour_unit)
 
     plot = []
 
-    plot.append(ggplot(hour_df, aes(x='Hour', weight = 'ENTRIESn_hourly')) +
-         geom_bar(stat='identity') + ylab("Avg. Number of entries") + ggtitle('Mean entries by hour'))
+    plot.append(ggplot(hour_df, aes(x='Hour', weight='ENTRIESn_hourly')) +
+                geom_bar(stat='identity') + ylab("Avg. Number of entries") + ggtitle('Mean entries by hour'))
 
-    plot.append(ggplot(week_df, aes(x='weekday', weight = 'ENTRIESn_hourly')) +
-           geom_bar(stat='identity') + ylab("Avg. Number of entries / hour")  + ggtitle('Mean hourly entries by weekday (0 = sunday)'))
+    plot.append(ggplot(week_df, aes(x='weekday', weight='ENTRIESn_hourly')) +
+                geom_bar(stat='identity') + ylab("Avg. Number of entries / hour") + ggtitle(
+        'Mean hourly entries by weekday (0 = sunday)'))
 
     plot.append(ggplot(unit_df, aes(x='UNIT', weight='ENTRIESn_hourly')) +
-           geom_bar() + ylab("Avg. Number of entries / hour") + ggtitle('Mean hourly entries by subway station'))
+                geom_bar() + ylab("Avg. Number of entries / hour") + ggtitle('Mean hourly entries by subway station'))
 
-    plot.append(ggplot(max_hour_unit, aes(x='Hour', weight='ENTRIESn_hourly', fill='UNIT'))+  geom_bar(stat='identity') +
-                ylab("Avg. Number of entries / hour") +  ggtitle('Stations with most hourly entries'))
+    plot.append(
+        ggplot(max_hour_unit, aes(x='Hour', weight='ENTRIESn_hourly', fill='UNIT')) + geom_bar(stat='identity') +
+        ylab("Avg. Number of entries / hour") + ggtitle('Stations with most hourly entries'))
 
     print(plot)
 
