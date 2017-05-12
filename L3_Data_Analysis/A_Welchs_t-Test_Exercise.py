@@ -43,5 +43,5 @@ def compare_averages(filename):
     return no_difference, (t, p)
 
 
-file = 'data/baseball_stats.csv'
+file = 'baseball_data/baseball_stats.csv'
 print(compare_averages(file))
