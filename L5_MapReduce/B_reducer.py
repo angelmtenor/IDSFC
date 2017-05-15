@@ -26,4 +26,4 @@ def reducer():
 
 reducer()
 
-#  $ cat Alice.txt | python B_mapper.py | sort | python C_reducer.py
+#  $ cat Alice.txt | python B_mapper.py | sort | python B_reducer.py
