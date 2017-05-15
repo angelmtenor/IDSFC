@@ -1,6 +1,7 @@
 # import logging
-import sys
 import string
+import sys
+
 
 # from util import logfile
 #
@@ -8,7 +9,7 @@ import string
 #                    level=logging.INFO, filemode='w')
 
 
-def word_count(filename):
+def word_count():
     # For this exercise, write a program that serially counts the number of occurrences
     # of each word in the book Alice in Wonderland.
     #
@@ -44,23 +45,15 @@ def word_count(filename):
     # https://docs.python.org/2/library/logging.html
     # for more information.
 
-    # Exercise updated: count words given a filename
-
     word_counts = {}
 
-    with open(filename) as f:
-        for line in f:
-            data = line.strip().split(" ")
-            for i in data:
-                key = i.translate(str.maketrans('', '', string.punctuation)).lower()
-                if key in word_counts:
-                    word_counts[key] += 1
-                else:
-                    word_counts[key] = 1
+    for line in sys.stdin:
+        data = line.strip().split(" ")
+        for i in data:
+            key = i.translate(str.maketrans('', '', string.punctuation)).lower()
+            if key in word_counts:
+                word_counts[key] += 1
+            else:
+                word_counts[key] = 1
 
-
-    print(word_counts)
-
-filename = 'Alice.txt'
-word_count(filename)
-
+        print(word_counts)
