@@ -57,3 +57,5 @@ def word_count():
                 word_counts[key] = 1
 
         print(word_counts)
+
+word_count()
