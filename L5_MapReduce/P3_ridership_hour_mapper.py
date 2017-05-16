@@ -42,4 +42,4 @@ def mapper():
 
 mapper()
 
-# $ cat ../L4_Data_Visualization/turnstile_data_master_with_weather.csv | python P3_ridership_hour_mapper | sort | python P2_ridership_hour_reducer
+# $ cat ../L4_Data_Visualization/turnstile_data_master_with_weather.csv | python P3_ridership_hour_mapper | sort | python P3_ridership_hour_reducer
