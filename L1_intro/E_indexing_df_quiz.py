@@ -1,6 +1,6 @@
 import pandas as pd
 
-'''
+"""
 You can think of a DataFrame as a group of Series that share an index.
 This makes it easy to select specific columns that you want from the 
 DataFrame. 
@@ -11,7 +11,7 @@ Also a couple pointers:
 
 *This playground is inspired by Greg Reda's post on Intro to Pandas Data Structures:
 http://www.gregreda.com/2013/10/26/intro-to-pandas-data-structures/
-'''
+"""
 # Change False to True to see Series indexing in action
 if False:
     data = {'year': [2010, 2011, 2012, 2011, 2012, 2010, 2011, 2012],
@@ -26,7 +26,7 @@ if False:
     print('')
     print(football[['year', 'wins', 'losses']])
 
-'''
+"""
 Row selection can be done through multiple ways.
 
 Some of the basic and common methods are:
@@ -36,7 +36,7 @@ Some of the basic and common methods are:
 
 You can also combine multiple selection requirements through boolean
 operators like & (and) or | (or)
-'''
+"""
 # Change False to True to see boolean indexing in action
 if True:
     data = {'year': [2010, 2011, 2012, 2011, 2012, 2010, 2011, 2012],

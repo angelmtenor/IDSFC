@@ -40,4 +40,4 @@ def reducer():
 
 reducer()
 
-#  $ #  $ cat Alice.txt | python B_mapper.py | sort | python B_reducer.py
+# $ cat ../L2_Data_Wrangling/aadhaar_data/aadhaar_data.csv | python C_aadhaar_generated_mapper.py | sort | python C_aadhaar_generated_reducer.py

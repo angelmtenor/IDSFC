@@ -2,7 +2,7 @@ import numpy as np
 from pandas import DataFrame, Series
 
 def avg_medal_count():
-    '''
+    """
     Using the dataframe's apply method, create a new Series called 
     avg_medal_count that indicates the average number of gold, silver,
     and bronze medals earned amongst countries who earned at 
@@ -12,7 +12,7 @@ def avg_medal_count():
 
     You do not need to call the function in your code when running it in the
     browser - the grader will do that automatically when you submit or test it.
-    '''
+    """
 
     countries = ['Russian Fed.', 'Norway', 'Canada', 'United States',
                  'Netherlands', 'Germany', 'Switzerland', 'Belarus',

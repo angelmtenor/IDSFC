@@ -13,7 +13,7 @@ from pandas import DataFrame, Series
 #                 'age'  : Series(ages)})
 
 def create_dataframe():
-    '''
+    """
     Create a pandas dataframe called 'olympic_medal_counts_df' containing
     the data from the table of 2014 Sochi winter olympics medal counts.  
 
@@ -25,7 +25,7 @@ def create_dataframe():
 
     You do not need to call the function in your code when running it in the
     browser - the grader will do that automatically when you submit or test it.
-    '''
+    """
 
     countries = ['Russian Fed.', 'Norway', 'Canada', 'United States',
                  'Netherlands', 'Germany', 'Switzerland', 'Belarus',
