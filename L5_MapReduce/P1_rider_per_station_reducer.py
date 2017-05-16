@@ -1,6 +1,7 @@
 # import logging
 import sys
 
+
 # from util import reducer_logfile
 #
 # logging.basicConfig(filename=reducer_logfile, format='%(message)s',
@@ -26,7 +27,7 @@ def reducer():
     So logging.info("my message") will work, but logging.info("my","message") will not.
     """
 
-    sum = 0
+    result = 0
     old_key = None
 
     for line in sys.stdin:
@@ -36,16 +37,15 @@ def reducer():
 
         key, value = data
 
-
         if old_key and (old_key != key):
-            print('{0}\t{1}'.format(old_key, sum))
-            sum = 0
+            print('{0}\t{1}'.format(old_key, result))
+            result = 0
 
         old_key = key
-        sum += float(value)
+        result += float(value)
 
     if old_key is not None:
-        print('{0}\t{1}'.format(old_key, sum))
+        print('{0}\t{1}'.format(old_key, result))
 
 
 reducer()

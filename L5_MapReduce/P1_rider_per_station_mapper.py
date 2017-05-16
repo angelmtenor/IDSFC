@@ -1,4 +1,3 @@
-import logging
 import sys
 
 # from util import mapper_logfile
